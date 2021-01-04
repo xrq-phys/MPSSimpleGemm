@@ -16,6 +16,12 @@ Compilation one-liner for Julia integration.
 # Use ARCHFLAG="-arch arm64" if you are using a ARM64 native build of Julia.
 # (As of Jan. 3 2021, Native ARM64 Julia is not vendored but can already be built from master.)
 ARCHFLAG="-arch x86_64" \
-  clang $ARCHFLAG MPSSimpleGemm/MPSSimpleGemm/MPSSimpleGemm.m MPSSimpleGemm/MPSSimpleGemm/matrix_realloc_rowmaj.c -framework Foundation -framework Metal -framework MetalPerformanceShaders -shared -o MPSSimpleGemm.dylib -Wall
+  clang $ARCHFLAG \
+    MPSSimpleGemm/MPSSimpleGemm/MPSSimpleGemm.m \
+    MPSSimpleGemm/MPSSimpleGemm/matrix_realloc_rowmaj.c \
+    -framework Foundation \
+    -framework Metal \
+    -framework MetalPerformanceShaders \
+    -shared -o MPSSimpleGemm.dylib
 ```
 
