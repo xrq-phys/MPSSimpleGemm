@@ -61,11 +61,13 @@ void FUNCNAME(matrix_writeback_rowmaj, typechar) \
      ctype *A, unsigned long tdA, \
      ctype *Ae, unsigned long tdAe) \
 { \
-    if (A != Ae) \
+    if (A != Ae) { \
         /* In case reallocation has taken place. */ \
         for (unsigned long i = 0; i < m; ++i) \
             for (unsigned long j = 0; j < n; ++j) \
                 A[i*tdA + j] = Ae[i*tdAe + j]; \
+        free(Ae); \
+    } \
 }
 DEFFUNC( float32_t, 32F )
 DEFFUNC( float16_t, 16F )
