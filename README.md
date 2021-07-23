@@ -19,6 +19,7 @@ ARCHFLAG="-arch x86_64" \
   clang $ARCHFLAG \
     MPSSimpleGemm/MPSSimpleGemm/MPSSimpleGemm.m \
     MPSSimpleGemm/MPSSimpleGemm/matrix_realloc_rowmaj.c \
+    -framework CoreGraphics \
     -framework Foundation \
     -framework Metal \
     -framework MetalPerformanceShaders \
