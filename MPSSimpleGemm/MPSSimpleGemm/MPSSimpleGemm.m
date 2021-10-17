@@ -7,13 +7,14 @@
 
 #import <Foundation/Foundation.h>
 #import <MetalPerformanceShaders/MetalPerformanceShaders.h>
+#import "MPSSimpleGemm.h"
 #import "matrix_realloc_rowmaj.h"
 
 #define FUNCNAME_AUX(name, suffix) name##_##suffix
 #define FUNCNAME(name, suffix_src, suffix_dst) name##_##suffix_src##_##suffix_dst
 
 #define DEFFUNC(mpstype_src, ctype_src, mpstype_dst, ctype_dst, typechar_src, typechar_dst) \
-void FUNCNAME(MPSSimpleGemm, typechar_src, typechar_dst) \
+double FUNCNAME(MPSSimpleGemm, typechar_src, typechar_dst) \
 	(bool tA, \
      bool tB, \
      unsigned long m, \
@@ -116,6 +117,7 @@ void FUNCNAME(MPSSimpleGemm, typechar_src, typechar_dst) \
     FUNCNAME_AUX(matrix_writeback_rowmaj, typechar_src)(nrowA, ncolA, addrA, tdA_, buffA, tdA); \
     FUNCNAME_AUX(matrix_writeback_rowmaj, typechar_src)(nrowB, ncolB, addrB, tdB_, buffB, tdB); \
     FUNCNAME_AUX(matrix_writeback_rowmaj, typechar_dst)(nrowC, ncolC, addrC, tdC_, buffC, tdC); \
+    return [iCmd GPUEndTime] - [iCmd GPUStartTime]; \
 }
 DEFFUNC( MPSDataTypeFloat32, float32_t, MPSDataTypeFloat32, float32_t, 32F, 32F )
 DEFFUNC( MPSDataTypeFloat16, float16_t, MPSDataTypeFloat16, float16_t, 16F, 16F )

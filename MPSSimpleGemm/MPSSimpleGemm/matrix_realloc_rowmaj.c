@@ -21,9 +21,9 @@ void FUNCNAME(matrix_realloc_rowmaj, typechar) \
      unsigned long *lbuff) \
 { \
     ctype *Ae = 0x0; \
-    unsigned long ldata = m * n * sizeof(ctype); \
-    if (((unsigned long long)A % metal_page_size) || \
-        (ldata % metal_page_size)) { \
+    if (((unsigned long long)A % metal_page_size)) { \
+        unsigned long ldata = m * n * sizeof(ctype); \
+\
         /* Reallocate matrices. */ \
         posix_memalign((void **)&Ae, metal_page_size, m * n * sizeof(ctype)); \
         for (unsigned long i = 0; i < m; ++i) \
@@ -36,10 +36,13 @@ void FUNCNAME(matrix_realloc_rowmaj, typechar) \
         else \
             *lbuff = ldata; \
     } else { \
+        unsigned long ldata = m * tdA * sizeof(ctype); \
+\
         /* In case allocation is not required. */ \
         *Ae_ = A; \
         *tdAe = tdA; \
-        *lbuff = ldata; \
+        *lbuff = (ldata + metal_page_size - 1) / \
+            metal_page_size * metal_page_size; \
     } \
 }
 DEFFUNC( float32_t, 32F )
