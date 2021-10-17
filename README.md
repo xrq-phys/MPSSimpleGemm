@@ -26,3 +26,13 @@ ARCHFLAG="-arch x86_64" \
     -shared -o MPSSimpleGemm.dylib
 ```
 
+The GPU timer that skipps launch overhead shows a performance of ~1.4TFlOps/sec.
+From this result I severely doubt that AMX (cf. [BLIS for Apple](https://github.com/xrq-phys/blis_apple))
+ is sharing half of M1's GPU (Any idea how to test?).
+```
+Problem size: m=2048 n=2048 k=2048
+Elapsed: 11.9637083 ms
+1435.998666 GFlOps
+Exec completed.
+```
+
